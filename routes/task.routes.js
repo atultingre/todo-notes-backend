@@ -8,10 +8,11 @@ const {
 } = require("../controllers/task.controller");
 const router = express.Router();
 
-router.get("/", getAllTasks);
-router.post("/create", createTask);
-router.post("/update/:id", updateTask);
-router.post("/delete/:id", deleteTask);
-router.post("/:id/subtask", addSubTask);
+router.get("/:userId", getAllTasks);
+router.post("/:userId/create", createTask);
+router.delete("/:userId/delete/:taskId", deleteTask);
+router.post("/:userId/update/:taskId", updateTask);
+router.post("/:userId/:taskId/subtask", addSubTask);
+router.post("/delete/subtask", deleteTask);
 
 module.exports = router;

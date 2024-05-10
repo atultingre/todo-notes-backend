@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const subTaskSchema = new mongoose.Schema(
   {
+    title: { type: String, required: true, lowercase: true },
     description: { type: String, required: true, lowercase: true },
     completed: { type: Boolean, default: false },
   },
@@ -10,9 +11,14 @@ const subTaskSchema = new mongoose.Schema(
 
 const taskSchema = new mongoose.Schema(
   {
+    title: { type: String, required: true, lowercase: true },
     description: { type: String, required: true, lowercase: true },
-    completed: { type: Boolean, default: false },
-    subTasks: [subTaskSchema],
+    status: {
+      type: String,
+      enum: ["in progress", "completed"],
+      default: "in progress",
+    },
+    subTasks: { type: [subTaskSchema], default: [] },
   },
   { minimize: true, timestamps: true }
 );
@@ -44,7 +50,7 @@ const userSchema = new mongoose.Schema(
       },
     },
     password: { type: String, required: true, minlength: 6 },
-    tasks: [taskSchema],
+    tasks: { type: [taskSchema], default: [] },
   },
   { minimize: true, timestamps: true }
 );
